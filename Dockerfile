@@ -3,7 +3,7 @@ MAINTAINER clifton <cliftonk@gmail.com>
 
 # install xvfb and other X dependencies for IB
 RUN apt-get update -y \
-    && apt-get install -y xvfb libxrender1 libxtst6 x11vnc socat \
+    && apt-get install -y xvfb libxrender1 libxtst6 x11vnc socat xterm\
     && rm -rf /var/lib/apt/lists/* \
     && apt-get clean
 
@@ -11,8 +11,9 @@ RUN mkdir /ib-gateway
 WORKDIR /ib-gateway
 
 # download and install the IB-gateway
-RUN wget -O total.jar -q https://download2.interactivebrokers.com/java/classes/total.2015.jar \
-    && wget -O jts.jar -q https://download2.interactivebrokers.com/java/classes/latest/jts.latest.jar
+RUN wget -O latest.jar -q https://download2.interactivebrokers.com/download/unixmacosx_latest.jar \
+    && jar xf latest.jar \
+    && mv IBJts/*.jar ./ 
 
 # install init scripts and binaries
 ADD config/jts.ini /ib-gateway/jts.ini
