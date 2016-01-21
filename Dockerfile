@@ -11,9 +11,8 @@ RUN mkdir /ib-gateway
 WORKDIR /ib-gateway
 
 # download and install the IB-gateway
-RUN wget -O latest.jar -q https://download2.interactivebrokers.com/download/unixmacosx_latest.jar \
-    && jar xf latest.jar \
-    && mv IBJts/*.jar ./ 
+ADD jts.jar jts.jar
+ADD total.2013.jar total.2013.jar
 
 # install init scripts and binaries
 ADD config/jts.ini /ib-gateway/jts.ini
@@ -33,3 +32,4 @@ VOLUME /ib-gateway
 ENV DISPLAY :0
 
 CMD ["/usr/bin/run-gateway"]
+
